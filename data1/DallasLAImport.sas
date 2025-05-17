@@ -1,5 +1,0 @@
-PROC IMPORT OUT= WORK.DFWLAX 
-            DATAFILE= "DallasLA.xls" 
-            DBMS=EXCEL2000 REPLACE;
-     GETNAMES=YES;
-RUN;
