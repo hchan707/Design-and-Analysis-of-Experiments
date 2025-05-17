@@ -1,0 +1,476 @@
+---
+title: "LAB7"
+output: pdf_document
+date: "2025-05-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## PSTAT 122 LAB 7
+
+## Part 1: Written Report
+
+## Method
+
+Question:
+
+Can we influence how long you can hold your breath with physical activities such as jumping jacks and arms up?
+
+In this lab, each participant will be record their own time using the TA's device. The aim of this lab was to investigate the eefects of physical activity with student after doing jumping jacks or arm up on how long students can hold their breath. This was done using a $2^2$ factorial design, testing all combinations of the two factors. 
+
+Each student was randomly assigned to one of the four treatment groups ("control", "jumping jacks", "arms up", "both") using the following R code: 
+
+```{r, echo = TRUE, results = 'hide'}
+treatment <- c("control", "jumping jacks", "arms up", "both")
+sample(treatment, 1)
+```
+
+Each student ran this code in thier own R session to determine their treatment. 
+The TA then timed each student's breath-holding time one by one and recording the time for each student on the whiteboard. 
+
+Some possible technical issues included small delays from timing or some student might misunderstand the instruction.
+
+## Result 
+
+Image From the whiteboard data:
+
+```{r, out.width = "100%"}
+# Show image of the whiteboard
+knitr::include_graphics("/Users/andy/Desktop/UCSBCourses/PSTAT122/LAB7/ImageLab7.jpeg")
+```
+
+Input Data:
+```{r, echo = FALSE, results = 'hide'}
+# Input Excel file
+
+# JJ = Jumping Jacks; AU = Arms Up
+
+# neither jumping jacks or arms up (JJ:no, AU: no)
+control <- c(34.31, 81.59, 57.57, 58.96, 40.74)
+
+# only arms up (JJ: no, AU: yes)
+arms_up <- c(67.11, 56.61, 24.05, 72.52, 39.79)
+
+# only jumping jacks (JJ: yes, AU: no)
+jumping_jacks <- c(63.66, 34.44)
+
+# jumping jacks and arms up (JJ: yes, AU: yes)
+both <- c(29.6, 32.97, 22.25)
+
+
+breath2_df <- data.frame(
+Time_in_second = c(control, arms_up, jumping_jacks, both),
+Arms_up = c(rep("NO", length(control)), rep("YES", length(arms_up)),
+            rep("NO", length(jumping_jacks)), rep("YES", length(both))),
+Jumping_Jacks = c(rep("NO", length(control) + length(arms_up)), 
+                  rep("YES",length(jumping_jacks) + length(both)))
+)
+breath2_df
+```
+
+Data Visualization of Breath-Holding Time by Treatment Group:
+
+Box plot:
+
+```{r}
+library(ggplot2)
+
+# Increase the base text size for better readability in the plot
+theme_update(text = element_text(size = 15))
+
+# Set up the plot: x-axis is arms_up, y-axis is time, color points by jumping_jacks
+ggplot(data = breath2_df, mapping = aes(x = Arms_up, y = Time_in_second, fill = Jumping_Jacks)) +
+  geom_boxplot() +
+  # Add a title to the plots
+  ggtitle("Breath-Holding Time by Treatment")  
+  
+```
+Figure:
+
+This box plot shows breath-holding times in seconds for different combination treatments. The x-axis is whether students held their arms up and the y is the breath-holding time in seconds. Each box plot represents the distribution of times for students in each treatment group. 
+
+Description:
+
+From the plot, we can see that highest median breath-holding times occurred in the group that held their arms up without doing jumping jacks. Both jumping jacks and holding arms up resulted in a very low breath-holding times. The addition of jumping jacks appears to reduce breath-holding time, especially when combined with holding arms up. The variability in breath-holding times is also largest for the group that did not do either treatment.
+
+Summary Statistics within Each Treatment Combination:
+
+Summarize the main characteristics of breath-holding times in each treatment group. By showing the mean, standard deviation, and sample size for each combination of Arms Up and Jumping Jacks, we can compare the average performance and variability between groups. This helps us identify any notable differences before conducting the hypothesis testing. 
+
+```{r}
+library(dplyr)
+# Sets factor levels for arms up and jumping jacks to ensure the order is No then Yes
+breath2_df$Arms_up <- factor(breath2_df$Arms_up, levels = c("NO", "YES"))
+breath2_df$Jumping_Jacks <- factor(breath2_df$Jumping_Jacks, levels = c("NO", "YES"))
+
+#Group by each combination of arms up and jumping jacks then calculate summary statistics
+sample_means <- breath2_df %>%
+          group_by(Arms_up, Jumping_Jacks) %>%
+          summarize(
+          Mean = round(mean(Time_in_second), 2), # Sample mean (round to 2 decimals)
+          Standard_deviation = round(sd(Time_in_second), 2), # Sample Standard Deviation (round to 2 decimals)
+          Size = n(), .groups = "drop" # Sample size (number of observations) and remove grouping after summarizing
+          )
+# Print the summary table
+knitr::kable(sample_means)
+```
+
+Jumping Jacks within each level of Arms Up:
+
+Evidence of Jumping Jacks when no Arms Up:
+
+$\text{NO, YES} - \text{NO, NO} = 49.05 - 54.63 = -5.58$
+
+Evidence of Jumping Jacks when Arms Up:
+
+$\text{YES, YES} - \text{YES, NO} = 28.27 - 52.02 = -23.75$
+
+Evidence of Arms Up when No Jumping Jacks:
+
+$\text{YES, NO} - \text{NO, NO} = 52.02 - 54.63 = -2.61$
+
+Evidence of Arms Up when Jumping Jacks:
+
+$\text{YES, YES} - \text{NO, YES} = 28.27 - 49.05 = -20.78$
+
+Among students who did not hold their arms up, doing jumping jacks decreased mean breath-holding time by about 5.6 seconds (from 54.6 to 49.1 seconds). Among students who held their arms up, doing jumping jacks led to a much larger decrease of about 23.8 seconds (from 52.0 to 28.3 seconds).
+
+Linear Model:
+
+```{r, echo = FALSE, results = 'hide'}
+lm_results <- lm(Time_in_second ~ Arms_up + Jumping_Jacks + Arms_up * Jumping_Jacks, data = breath2_df)
+summary(lm_results)
+```
+Interpretation of Linear Model:
+
+We fit a linear model with breath-holding time as the response and predictors for two factors (Jumping_Jacks and Arms_up) and their interaction. The model was:
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2
+$$
+
+where:
+
+- $ x_1: $ Jumping Jacks (0 = No, 1 = Yes)
+
+- $ x_1: $ Arms Up (0 = No, 1 = Yes)
+
+- $ x_1 x_2: $ Interaction between Jumping Jacks and Arms Up
+
+The inear model is:
+
+$$
+\text{Breath-holding time} = \beta_0 + \beta_1\,\text{(Jumping Jacks)} + \beta_2\,\text{(Arms Up)} + \beta_3\,\text{(Jumping Jacks)}\,\text{(Arms Up)}
+$$
+
+Using the data, here are the estimates:
+
+$\beta_0:$ 54.63 seconds (p < 0.001) 
+
+- The estimated mean breath-holding time for the control group (no jumping jacks, no arms up).
+
+$\beta_1:$ -5.58 seconds (p=0.713) 
+
+- Decrease from doing jumping jacks alone.
+
+$\beta_2:$ -2.62 seconds (p = 0.819)
+
+- Decrease from raising arms alone.
+
+$\beta_3:$ -18.16 seconds (p = 0.376)
+
+- Additional decrease when doing both.
+
+Overall Model Test:
+
+$$
+H_0: \beta_1 = \beta_2 = \beta_3 = 0 \qquad \text{vs} \qquad H_A: \text{At least one of } \beta_1, \beta_2, \beta_3 \text{ is not zero}
+$$
+
+F-statistic = 1.56 on 3 and 11 DF
+
+p-value = 0.2539
+
+Since p > 0.05, we fail to reject $H_0$. The model does not show significant evidence that these treatments influence breath-holding time.
+
+Hypothesis Testing:
+
+```{r, echo = FALSE, results = 'hide'}
+anova(lm_results)
+```
+Interpretation of ANOVA:
+
+The ANOVA shows there is no statistically significant evidence that either factor or the combination affected breath-holding time:
+
+Arms Up: F = 1.173, p-value = 0.392
+Jumping Jacks: F = 2.661, p-value = 0.131
+Interaction (Arms Up * Jumping Jacks): F = 0.853, p-value = 0.376
+
+None of the factors had a statistically significant effect on breath-holding time (p > 0.05). We failed to reject the null hypothesis. Since our sample sizes were small and group sizes were not balanced, it is possible that a Type II Error occurred. 
+
+Report the Null Hypotheses:
+
+$H_0: \text{Each factor has no impact on the time and there is no interaction between the two}$
+
+JJ = Jumping Jacks and AU = Arms Up.
+
+$$
+\mu_{\text{ JJ : No; AU : No}} = \text{the mean breath-holding time under the Control treatment}
+$$
+
+$$
+\mu_{\text{ JJ : No; AU : Yes}} = \text{the mean breath-holding time under the Arms Up treatment}
+$$
+
+$$
+\mu_{\text{ JJ : Yes; AU : No}} = \text{the mean breath-holding time under the Jumping Jacks treatment}
+$$
+
+$$
+\mu_{\text{ JJ : Yes; AU : Yes}} = \text{the mean breath-holding time under the Both treatment}
+$$
+
+$$
+H_0: \mu_{\text{ JJ : No; AU : No}} = \mu_{\text{ JJ : No; AU : Yes}} = \mu_{\text{ JJ : Yes; AU : No}} = \mu_{\text{ JJ : Yes; AU : Yes}}
+$$
+
+Report the Alternative Hypotheses:
+
+$H_A: \text{At least one } \mu_{JJ,AU} \text{ differs from the others}$
+
+where $\mu_{JJ,AU}$ denotes the mean breath-holding time for each specific combination of the Jumping Jacks (JJ) and Arms Up (AU) treatments.
+
+$$
+\begin{aligned}
+H_A:\quad 
+& \mu_{\text{JJ: No; AU: No}} \neq \mu_{\text{JJ: Yes; AU: No}} \\
+& \text{or } \mu_{\text{JJ: No; AU: No}} \neq \mu_{\text{JJ: No; AU: Yes}} \\
+& \text{or } \mu_{\text{JJ: No; AU: No}} \neq \mu_{\text{JJ: Yes; AU: Yes}} \\
+& \text{or } \mu_{\text{JJ: Yes; AU: No}} \neq \mu_{\text{JJ: No; AU: Yes}} \\
+& \text{or } \mu_{\text{JJ: Yes; AU: No}} \neq \mu_{\text{JJ: Yes; AU: Yes}} \\
+& \text{or } \mu_{\text{JJ: No; AU: Yes}} \neq \mu_{\text{JJ: Yes; AU: Yes}} \\
+& \text{or } \ldots
+\end{aligned}
+$$
+
+Conclusion:
+
+Can we influence how long you can hold your breath with physical activities such as jumping jacks and arms up?
+
+Based on the results from both the ANOVA and the linear model, we found no statistically significant evidence that jumping jacks, raising arms, or the combination of the two affected breath-holding time. All p-values were above 0.05, and the overall model was not statistically significant. Therefore, we conclude that in this experiment, physical activity did not have a significant impact on how long someone can hold their breath.
+
+Coefficients:
+
+Form the linear model, we interpret the estimated coefficients and their associated p-values:
+
+$\beta_0:$ 54.63 seconds, p < 0.001: This is the mean breath_holding time for the control group. It is significantly different from 0.
+
+$\beta_1:$ -5.58 seconds, p=0.713: This represents the change in breath-holding time for students who did jumping jacks but did not arms up. The p-value is lard, so we find no statistically significant evidence that jumping jacks alone affect breath=holding time.
+
+$\beta_2:$ -2.62 seconds, p = 0.819: This represents the effect of raising arms without doing jumping jacks. The p-value is greater than 0.05, so the result is not statistically significant.
+
+$\beta_3:$ -18.16 seconds, p = 0.376: This is the interaction effect. The change in breath-holding time when students did both. The p-value is not statistically significant. 
+
+Since all p-value for the treatment effects are greater than 0.05, there is no statistically significant evidence that jumping jacks, arms up, or their interaction have an impact on breath-holding time. However, the relatively large estimated effect suggests that there is a possible effect that may not be detected due to small sample sizes and Type II error is possible.
+
+## Discussion
+
+In this lab, we investigated whether jumping jacks and raising arms affect how long someone can hold their breath using a $2^2$ factorial design. We collected and analyzed data from four treatment groups and used both ANOVA and a linear model to test for effects.
+
+Our results showed that while the group that performed both activities tended to have the lowest mean breath-holding time, none of the observed differences were statistically significant. The ANOVA and linear model both indicated that the main effects and interaction term had p-values greater than 0.05. Therefore, we failed to reject the null hypothesis, and we concluded that the treatments did not have a significant impact on breath-holding time.
+
+One drawback was the randomization method, which led to unequal group sizes. Timing was also done manually by the TA, which may have introduced some variability. These factors could have limited the accuracy and power of our conclusions. 
+
+## Part 2
+
+## 1) Consider the data in Exercise 3.17 in our textbook:
+
+Enter these data into your R Markdown file as a rectangular data frame. Then,
+
+```{r}
+App1 <- c(1000, 1500, 1200, 1800, 1600, 1100, 1000, 1250)
+
+App2 <- c(1500, 1800, 2000, 1200, 2000, 1700, 1800, 1900)
+
+App3 <- c(900, 1000, 1200, 1500, 1200, 1550, 1000, 1100)
+
+contribution_df <- data.frame(
+contribution = c(App1, App2, App3),
+approach = c(rep("1", length(App1)), rep("2", length(App2)),
+            rep("3", length(App3)))
+
+)
+contribution_df
+
+```
+
+(a) Run aov on these data to investigate whether there are any differences in the mean contribution
+according to the approach. Report your p-value and conclusions at α = 0.05.
+
+ANOVA Test:
+
+```{r}
+contribution_aov_result <- aov(contribution ~ approach, data = contribution_df)
+summary(contribution_aov_result)
+```
+Interpretation & Summary:
+
+F value: 9.41
+
+p-value: 0.00121
+
+At $\alpha = 0.05$, the one-way ANOVA comparing mean contributions across the three solicitation approaches yielded an F-statistic of 9.41 and a p-value of 0.0012. Since the p-value is much less than 0.05, we reject the null hypothesis and conclude that there is a statistically significant difference in mean contributions with the approaches.
+
+(b) Run lm on these data to investigate whether there are any differences in the mean contribution
+according to the approach. Confirm that your p-value from lm matches what you obtained from
+the ANOVA.
+
+Linear Model Test:
+
+```{r}
+contribution_lm_result <- lm(contribution ~ approach, data = contribution_df)
+anova(contribution_lm_result)
+```
+Interpretation & Summary:
+
+F value: 9.41
+
+p-value:0.001209
+
+The ANOVA table from the linear model confirms the results obtained earlier: there is a statistically significant difference in mean contributions among the three approaches F = 9.41, p = 0.0012. The p-value matches what was obtained using the aov() function.
+
+## 2) Consider the data from Exercise 6.14 in our textbook:
+
+```{r}
+# Row by row from the table thickness data
+A <- c(rep("low", 4), rep("high", 4), rep("low", 4), rep("high", 4))
+B <- c(rep("low", 8), rep("high", 8))
+
+thickness <- c(
+  14.037, 16.165, 13.972, 13.907,    # A = low, B = low
+  13.880, 13.860, 14.032, 13.914,    # A = high, B = low
+  14.821, 14.757, 14.843, 14.878,    # A = low, B = high
+  14.888, 14.921, 14.415, 14.932     # A = high, B = high
+)
+
+epitaxial_df <- data.frame(
+  A = factor(A, levels = c("low", "high")),
+  B = factor(B, levels = c("low", "high")),
+  thickness = thickness
+)
+```
+
+(a) Make two graphical representations of the data (refer back to Lecture 12), and comment briefly
+on what you observe.
+
+Box plot:
+
+```{r}
+library(ggplot2)
+
+theme_update(text = element_text(size = 15))
+
+ggplot(data = epitaxial_df, mapping = aes(x = interaction(A,B), y = thickness, fill = A)) +
+  geom_boxplot() +
+  labs(x = "Treatment (A,B)", 
+       y = "Thickness (um)",
+       title = "Expitaxial Layer Thickness by Treatment")
+```
+
+The box plot shows that epitaxial layer thickness tends to be higher when deposition time B is high. The group with high arsenic flow A and low deposition time has the lowest thickness. There is more variability in the low.low group. 
+
+Line graph:
+```{r}
+library(dplyr)
+ep_means <- epitaxial_df %>%
+  group_by(A,B) %>%
+  summarize(mean_thickness = mean(thickness))
+
+ggplot(data = ep_means, mapping = aes(y = mean_thickness, x = B, group = A, color = A)) +
+  geom_point() + 
+  geom_line() + 
+  ggtitle("Line Plot: Thickness by A and B") + 
+  labs(x = "Deposition Time (B)", y = "Mean Thickness (μm)")
+```
+
+The line plot shows that mean thickness increases as deposition time B goes from low to high. The increase is larger when arsenic flow rate A is high, shows a possible interaction between the factors. Both factors appear to have an effect on thickness.
+
+(b) Report the overall p-value from the linear model and write a brief statement of conclusions at
+$\alpha$ = 0.05. Also evaluate the individual coefficient p-values according to what was discussed in
+Lecture 12.
+
+```{r}
+lm_result <- lm(thickness ~ A * B, data = epitaxial_df)
+summary(lm_result)
+```
+
+The F-statistic is 2.187 with a p-value of 0.1425
+
+$\beta_0 = 14.5203$: The expected thickness (μm) when both A and B are at their low levels.
+
+$\beta_1 = -0.5988$: The expected change in thickness when A switches from low to high, with B held at low p = 0.160
+
+$\beta_2 = 0.3045$: The expected change in thickness when B switches from low to high, with A held at low p = 0.461.
+
+$\beta_3 = 0.5630$ The interaction effect: the additional change in thickness when both A and B are at high, beyond the sum of their individual effects p = 0.339
+
+none of the individual coefficients are statistically significant at the 0.05 level. This means there is no strong evidence that either factor or their interaction has a significant effect on the response. 
+
+since 0.1425 > 0.05, we fail to reject the null hypothesis. There is no statistically significant evidence that factors A, B, or their interaction affect the epitaxial layer thickness.
+
+(c) Write down a regression equation, similar to what was seen in Lecture 13 Slide 26.
+Regression Equation:
+
+$$
+
+\text{thickness} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2
+
+$$
+
+where:
+
+$x_1$ = 1 if A is high, 0 if A is low (arsenic flow rate)
+
+$x_2$ = 1 if B is high, 0 if B is low (deposition time)
+
+$x_1x_2$ = 1 if both A and B are high, 0 otherwise (interaction)
+
+plug estimates:
+
+$$
+\text{thickness} = 14.5203 - 0.5988 x_1 + 0.3045 x_2 + 0.5630 x_1 x_2
+$$
+
+(d) What is the estimated difference in epitaxial layer thickness attributed to Factor A, when Factor
+B is at the “high” level?
+
+$$
+\left[\text{thickness when } A = \text{high}, B = \text{high}\right] - \left[\text{thickness when } A = \text{low}, B = \text{high}\right]
+$$
+
+When Factor B is at the high level $x_2 = 1$:
+
+For A = high ($x_1 = 1$):
+
+$$
+  \text{thickness}_{A=\text{high}, B=\text{high}} = \beta_0 + \beta_1 (1) + \beta_2 (1) + \beta_3 (1)(1)
+$$
+
+For A = low ($x_0 = 0$):
+
+$$
+  \text{thickness}_{A=\text{low}, B=\text{high}} = \beta_0 + \beta_1 (0) + \beta_2 (1) + \beta_3 (0)(1)
+$$
+
+$$
+= \left[\beta_0 + \beta_1 + \beta_2 + \beta_3\right] - \left[\beta_0 + \beta_2\right]
+= \beta_1 + \beta_3
+$$
+
+$$
+\beta_1 + \beta_3 = -0.5988 + 0.5630 = -0.0358
+$$
+
+The estimated difference in epitaxial layer thickness attributed to Factor A, when Factor B is at the high level, is 0.0358 um

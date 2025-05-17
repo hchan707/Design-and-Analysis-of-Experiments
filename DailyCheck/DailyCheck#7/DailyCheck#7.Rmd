@@ -1,0 +1,42 @@
+---
+title: "DailyCheck#7"
+output:
+  pdf_document: default
+  html_document: default
+date: "2025-04-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r, fig.show= "hold", out.width = "50%"}
+google <- c(46, 49, 51, 42)
+waze <- c(44, 47, 47, 43)
+gut <- c(50, 51, 45, 43)
+google_resid <- google - mean(google)
+waze_resid <- waze - mean(waze)
+gut_resid <- gut - mean(gut)
+commute_resid <- c(google_resid, waze_resid, gut_resid)
+
+hist(commute_resid)
+
+qqnorm(commute_resid)
+qqline(commute_resid)
+
+```
+```{r}
+shapiro.test(commute_resid)
+```
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

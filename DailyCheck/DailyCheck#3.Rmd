@@ -1,0 +1,76 @@
+---
+title: "DailyCheck#3"
+output:
+  pdf_document: default
+  html_document: default
+date: "2025-04-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+#The test statistic for a two-sample t-Test:
+$$
+t_0 = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}
+$$
+
+```{r cars}
+
+coffee <- c(8.5, 7.0, 7.25, 10.5, 6.0)
+control <- c(9.5, 10.25,7.5,8.5, 8.75)
+mean(coffee)
+mean(control)
+t.test(coffee, control)
+```
+```{r}
+coffee_n <- length(coffee)
+control_n <- length(control)
+
+coffee_mean <- mean(coffee)
+control_mean <- mean(control)
+
+coffee_sd <- sd(coffee)
+control_sd <- sd(control)
+
+#Create summary statistics matrix
+summary_stats <- matrix(c(coffee_n, coffee_mean, coffee_sd, control_n, control_mean, control_sd),
+                        nrow = 2, byrow = TRUE)
+
+#Set column and row names
+colnames(summary_stats) <- c("n", "mean", "sd")
+rownames(summary_stats) <- c("coffee", "control")
+
+library(knitr)
+kable(summary_stats, caption = "Summary Statistics")
+```
+```{r}
+#Perform a t-test
+model1 <- t.test(coffee, control)
+names(model1)
+```
+```{r}
+#Create a matrix for t-test result
+output <- matrix(c(model1$statistic, model1$parameter, model1$p.value), nrow = 1)
+colnames(output) <- c("t", "df", "p-value")
+#Display the t-test results
+kable(output, caption = "t-Test results")
+```
+
+```{r}
+lower_bound <- round(model1$conf.int[1], 2)
+upper_bound <- round(model1$conf.int[2], 2)
+conf_int_sentence <- paste("The 95% confidence interval for the difference in mean sleep hours between the two groups is (", lower_bound, "," , upper_bound, ").")
+conf_int_sentence
+```
+#The 95% confidence interval is (-3.21, 1.11). 
+#This interval suggests that there is no statistically significant difference between the two groups since the interval includes zero.
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

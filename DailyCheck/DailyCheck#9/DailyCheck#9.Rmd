@@ -1,0 +1,79 @@
+---
+title: "DailyCheck#9"
+output: pdf_document
+date: "2025-04-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+person1 <- c(7, 7.5, 9, 8.25)
+person2 <- c(8.25, 8.5, 9.5, 8.5)
+person3 <- c(6.5, 7, 8.5, 9)
+person4 <- c(8, 8, 8, 8)
+wines_df <- data.frame(
+score = c(person1, person2, person3, person4),
+treatment = rep(c("Control", "Decanter", "Aerator", "Blender"), 4),
+block = c(rep("Person1",4),
+rep("Person2",4),
+rep("Person3",4),
+rep("Person4",4))
+)
+```
+## R Markdown
+## Your Turn 1
+```{r}
+library(readxl)
+vasc <- read_excel("VascGraft.xlsx")
+
+library(ggplot2)
+ggplot(data = vasc, aes(y = yield, x=PSI, 
+                        group = block, color = block)) +
+  geom_point() + geom_line() + ggtitle("Yield across PSI")
+```
+Yield generally decreases as PSI increases, but the effect varies between blocks. There is noticeable variability in yield resonse across blocks. 
+
+```{r}
+model1 <- aov(score ~ treatment + block, data = wines_df)
+summary(model1)
+
+model2 <- aov(score ~ treatment, data = wines_df)
+summary(model2)
+```
+## Question:
+With the wines dataset, why do we get a different treatment p-value on Slides 15 and 16? Which one is the one we should use?
+Answer:
+We need to work on each block first.
+One of them has block in the model and one of them does not.
+We should have blocks in the model which the p-value from Model1(0.039), because blocks must be included. Model2 has an incorrect p-vlaue since it ignores blocks.
+model1 is right and model2 is wrong.
+
+## Your Turn #2
+This is wrong becuase it treats PSI and block as quantitative:
+```{r}
+model3 <- aov(yield ~ PSI + block, data = vasc)
+summary(model3)
+```
+
+First we have to change PSI and block to categorical:
+```{r}
+vasc$PSI <- as.factor(vasc$PSI)
+vasc$block <- as.factor(vasc$block)
+```
+
+Now we can re-run analysis:
+```{r}
+model4 <- aov(yield ~ PSI + block, data = vasc)
+summary(model4)
+```
+
+## Including Plots
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

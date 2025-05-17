@@ -1,0 +1,57 @@
+---
+title: "DailyCheck#10"
+output: pdf_document
+date: "2025-04-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+## Question 
+1) Explain the relevance of the Sum of Squares values displayed on Slide 10 as discussed in class (Slide 12 may also be helpful in your understanding of it). 
+
+SSE = SSB + SSE(B)
+5.09375 = 2.015625 + 3.078125 
+On Slide 10, we know how the total variation in our experiment is split up when we use a Randomized Complete Block Design. Without any blocking, the total leftover variation is 5.094.
+We are split that variation into two parts. 
+SSB(Sum of Squares for Blocks) = 2.016
+SSE(B) (Residual Error after Blocking) = 3.078
+
+the block is useful because it helps us remove extra variation that comes from differences between blocks.The leftover error becomes smaller, which improves the accuracy of our F-test. A smaller error makes it easier to spot real differences between treatments. 
+
+```{r cars}
+```
+
+
+```{r}
+library(readxl)
+vasc <- read_excel("VascGraft.xlsx")
+```
+
+
+```{r}
+library(dplyr)
+sum_stats <- vasc %>%
+group_by(PSI) %>%
+summarize(mean=mean(yield), var=var(yield))
+knitr::kable(sum_stats)
+```
+Base case:
+```{r}
+groupmeans <- sum_stats$mean
+power.anova.test(groups = length(groupmeans), between.var = var(groupmeans), within.var = 8, 
+                 power = 0.8, sig.level = 0.05, n = NULL)
+```
+
+
+## Including Plots
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
