@@ -1,0 +1,139 @@
+---
+title: "Paper Airplanes RCBD"
+output: pdf_document
+date: "2025-05-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+```
+
+## Paper Airplanes RCBD
+
+## Method:
+
+This lab is to determine whether the placement of a paperclip on a paper airplane affects how far the airplane flies. We tested three situations: putting a paperclip on the nose, on the rear, and not using a paperclip at all. Every student threw the same airplane under all three conditions.
+
+We did the experiment in an indoor hallway to avoid wind and outside changes. Each student threw the plane from the same spot, trying to throw it as straight as possible. Other students measured how far the plane flew from the starting point to where it first landed.
+
+To keep the test fair, we used the sample() function in R to randomize the order of the throws for each student. This helped prevent learning or getting tired from affecting the results.
+
+The technical issues happened during the experiment. Sometimes the plane flew way off course or hit someone, so we had to repeat those throws. Also, not every throw was perfect, and small differences in how the paperclip was placed may have caused more variation in the data. 
+
+## Airplane Data Collection and Constructing the Experimental Data Frame
+
+```{r cars}
+#in the order of nose, rear, no_p
+person_1 <- c(215, 162, 235) #Distances for person 1 in cm
+person_2 <- c(180, 145, 242) #Distances for person 2 in cm
+person_3 <- c(195, 60, 84) #Distances for person 3 in cm
+person_4 <- c(200, 102, 198) #Distances for person 4 in cm
+person_5 <- c(152, 91, 170) #Distances for person 5 in cm
+
+# Create data frame
+airplane_df <- data.frame(
+  score = c(person_1, person_2, person_3, person_4, person_5),
+  treatment = rep(c("nose", "rear", "no_p"), 5), #5 people
+  block = c(rep("person_1", 3), #3 trials
+            rep("person_2",3), 
+            rep("person_3", 3), 
+            rep("person_4", 3), 
+            rep("person_5", 3))
+)
+sample(airplane_df) #Print out the sample of the data.frame
+```
+
+## Data Visualization
+
+```{r}
+library(ggplot2)
+theme_update(text = element_text(size = 20))
+
+ggplot(data = airplane_df, 
+       aes(y= score, x = treatment, group = block, color = block)) + 
+  geom_point() +
+  geom_line()
+```
+
+Description for the ggplot:
+
+This is the ggplot shows that most individuals achieved their longest flight distances with no paperclip or when the paperclip was on the nose, while placing the paperclip on the rear generally resulted in shorter flights for all students.
+
+## Report the null and alternative hypotheses Treatment Groups and Block
+
+To find out whether the paperclip position (treatment) or the person throwing the airplane (block) has a statistically significant effect on flight distance, I performed a two-way ANOVA. For both factors, I clearly stated the null and alternative hypotheses, and tested them using a significance level of $\alpha = 0.05$.
+
+```{r}
+model_treatment_block <- aov(score ~ treatment + block, data = airplane_df)
+#model1 <- aov(score ~ treatment, data = airplane_df) need the block
+summary(model_treatment_block)
+```
+
+Report the null and alternative hypotheses for Treatment Groups (Paperclip Positions)
+
+$$ 
+H_0: \mu_{\mathrm{no\ p}} = \mu_{\text{nose}} = \mu_{\text{rear}} 
+$$
+
+$$
+H_0: \text{The mean flight distance is the same for all paperclip positions.}
+$$
+
+$$
+H_a: \text{The mean flight distance is different for at least one paperclip position.} 
+$$
+
+$$
+H_a: \text{At least one position has a different mean.} 
+$$
+
+F value: 8.426
+
+p-value: 0.0107
+
+Report the null and alternative hypotheses for Block (Student Throwing)
+
+$$
+H_0: \mu_{\mathrm{person\ 1}} = \mu_{\mathrm{person\ 2}} = \mu_{\mathrm{person\ 3}} = \mu_{\mathrm{person\ 4}} = \mu_{\mathrm{person\ 5}} 
+$$
+
+$$
+H_0: \text{The mean flight distance is the same for all individual students.}
+$$
+
+$$
+H_a: \text{The mean flight distance is different for at least one student.} 
+$$
+$$
+H_a: \text{At least one student has a different mean.}
+$$
+
+F value: 3.700
+
+p-value: 0.0545
+
+```{r}
+library(knitr)
+anova_table <- as.data.frame(summary(model_treatment_block)[[1]])
+anova_table$Factor <- rownames(anova_table)
+anova_table <- anova_table[, c( "Df", "Sum Sq", "Mean Sq", "F value", "Pr(>F)")]
+kable(anova_table, caption = "ANOVA Table for Paper Airplane Data")
+```
+
+## Result:
+
+I used a Randomized Complete Block Design (RCBD) to analyze the data. In this design, each student is a block, and each paperclip position is a treatment.
+
+For the paperclip position, the ANOVA table showed an F value of 8.4264 and a p-value of 0.0107. Since the p-value is smaller than 0.05, we reject the null hypothesis. This means that the paperclip position has a statistically significant effect on how far the airplane flies.
+
+For the student (block) effect, the F value was 3.6997 with a p-value of 0.0545. Since this p-value is greater than 0.05, we do not reject the null hypothesis. This means that the difference between students is not statistically significant.
+
+## Discussion:
+
+This experiment tested if the paperclip's position changes how far a paper airplane flies. We found that the position matters, but who throws the plane doesn't make a big difference.
+
+Flights were usually shortest with the rear paperclip, while the nose and no paperclip conditions flew farther. Randomizing the order helped reduce bias, but small errors in throwing or setup might have affected results. Overall, rear paperclip placement seems to reduce flight distance, and future studies with more trials could give stronger results.
+
+
+
