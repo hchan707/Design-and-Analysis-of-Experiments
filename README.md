@@ -16,18 +16,7 @@ This repository contains a series of statistical projects using experimental des
 
 ---
 
-### 2. 👶 **Birth Rate and Education Regression Analysis**
-**Type:** Multiple Linear Regression  
-**Goal:** Investigate the influence of maternal education and Medicaid coverage on birth rates across U.S. states  
-**Key Variables:** % with no high school, % with college degree, % Medicaid  
-**R²:** 0.82  
-**Key Insight:** Higher maternal education strongly correlates with lower birth rates  
-📄 [Report](./Factorial_Design_Analysis.pdf)  
-📜 [R Markdown Code](./Factorial_Design_Analysis.Rmd)
-
----
-
-### 3. ✈️ **Paper Airplane Flight Distance (RCBD)**
+### 2. ✈️ **Paper Airplane Flight Distance (RCBD)**
 **Type:** Randomized Complete Block Design  
 **Goal:** Measure differences in airplane performance while controlling for block effects (e.g., thrower, environment)  
 **Analysis:** ANOVA with blocking  
@@ -36,7 +25,7 @@ This repository contains a series of statistical projects using experimental des
 
 ---
 
-### 4. 🫁 **Breath-Holding Time Study (GRBD + Factorial)**
+### 3. 🫁 **Breath-Holding Time Study (GRBD + Factorial)**
 **Type:** Generalized Randomized Block Design + Factorial Design  
 **Factors:** Breathing technique × Gender  
 **Analysis:** Factorial model with block structure  
