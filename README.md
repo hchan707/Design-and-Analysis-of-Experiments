@@ -6,7 +6,7 @@ This repository contains a series of statistical projects using experimental des
 
 ## 📁 Projects Overview
 
-### 1. 💓 **2x3 Factorial Design: Caffeine and Noise Effects on Pulse Rate**
+### 1. **2x3 Factorial Design: Caffeine and Noise Effects on Pulse Rate**
 **Type:** Full Factorial Design  
 **Factors:** 3 levels of caffeine × 2 levels of noise (6 total combinations)  
 **Design:** Self-experiment with 54 trials  
@@ -16,7 +16,15 @@ This repository contains a series of statistical projects using experimental des
 
 ---
 
-### 2. ✈️ **Paper Airplane Flight Distance (RCBD)**
+### 2. **Physical Activity and Breath-Holding: 2x2 Factorial Design**
+- **File:** `Factorial_Design_Analysis.pdf`
+- **Description:** A 2x2 factorial design study testing how physical activities (Jumping Jacks and/or raising Arms) affect breath-holding duration.
+- **Techniques Used:** Factorial ANOVA, interaction effects, linear modeling, summary statistics, residual diagnostics.
+- **Key Result:** No statistically significant effects were found. However, the combination of both exercises appeared to reduce breath-holding time the most, suggesting possible trends not detected due to small sample size.
+
+---
+
+### 3. **Paper Airplane Flight Distance (RCBD)**
 **Type:** Randomized Complete Block Design  
 **Goal:** Measure differences in airplane performance while controlling for block effects (e.g., thrower, environment)  
 **Analysis:** ANOVA with blocking  
@@ -25,7 +33,7 @@ This repository contains a series of statistical projects using experimental des
 
 ---
 
-### 3. 🫁 **Breath-Holding Time Study (GRBD + Factorial)**
+### 4. **Breath-Holding Time Study (GRBD + Factorial)**
 **Type:** Generalized Randomized Block Design + Factorial Design  
 **Factors:** Breathing technique × Gender  
 **Analysis:** Factorial model with block structure  
