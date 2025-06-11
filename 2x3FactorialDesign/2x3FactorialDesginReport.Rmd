@@ -1,0 +1,549 @@
+---
+title: "2x3FactorialDesign"
+output: pdf_document
+date: "2025-05-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+In today’s fast-paced world, people are surrounded by things that can subtly affect their health every day. Two of the most common—and often overlooked—are caffeine and noise. Caffeine is found in coffee, tea, sodas, and energy drinks, and is the most widely used stimulant in the world (Nehlig et al., 1992). Its popularity is easy to understand: it helps people feel more alert, improves mood, and gives a quick boost of energy, making it a go-to for staying productive and fighting off fatigue (Nawrot et al., 2003).
+
+At the same time, noise has become almost impossible to avoid, especially in cities. Whether it’s traffic, crowds, or background music, very few of us spend much time in silence. Research shows that long-term noise exposure can be a real public health issue, affecting both mental and physical well-being (Babisch, 2011; Münzel et al., 2014). Noise acts as a stressor and can trigger the body’s fight-or-flight response, temporarily raising heart rate and blood pressure.
+
+Both caffeine and noise impact the cardiovascular system in their own ways. Caffeine works by blocking adenosine receptors in the brain, which leads to higher activity in the nervous system and, at higher doses, can raise both pulse rate and blood pressure (Palatini, 2011). Noise can have similar effects—even if we’re not always aware of it—by activating stress pathways that also bump up heart rate (Babisch, 2011).
+
+Although there’s plenty of research on caffeine and noise separately, not much is known about what happens when people experience both at the same time. In reality, though, this is pretty common—think of drinking coffee on a noisy commute, or having an energy drink at a loud event. It’s not clear whether the effects of caffeine and noise just add up, or if they interact in other ways. This question matters, since even small, repeated increases in pulse rate could contribute to heart problems over time, especially for those already at risk (Palatini, 2011).
+
+Pulse rate is a simple, non-invasive way to track the body’s response to these everyday exposures, and even short-term changes can tell us a lot about how our nervous system is working. Because a higher resting pulse is linked to increased risk of heart disease, understanding how daily habits affect it can help people make better decisions for their health (Palatini, 2011).
+
+With this in mind, the present study set out to see how caffeine and noise—alone and together—affect pulse rate. By mimicking real-life situations where people might drink caffeinated beverages in quiet or noisy settings, this experiment hopes to shed light on how these common factors might influence heart health, even in the short term.
+
+## Hypothesis:
+
+1. Higher levels of caffeine will lead to higher pulse rates compared to lower or no caffeine.
+
+2. Exposure to loud noise will lead to higher pulse rates compared to quiet conditions.
+
+3. The combination of higher caffeine and loud noise will result in the highest pulse rates.
+
+# Method: 
+
+## Study Design:
+
+This study employed a 2 X 3 full factorial design to examine the effects of caffeine and noise level on pulse rate. The two factors were: 
+
+- Caffeine (3 level):
+
+1. 1 cup of Pure Leaf Unsweetened Green Tea (300ml about 13.5mg of caffeine)
+
+2. 1 can of Pepsi(355ml with 38mg of caffeine)
+
+3. 1 can of Red Bull(250ml with 80ml of caffeine))
+
+\vspace{0.7cm}
+
+- Noise (2 level): 
+
+1. Quiet (totally silent in a room)
+
+2. Loud (music played at a consistent, high volume)
+
+Data were collected by myself over 11 separate days (5/15, 5/16, 5/17, 5/18, 5/20, 5/22, 5/23, 5/26, 5/27, 5/28, and 5/30). On each day, one or more unique combinations of caffeine type and noise level were tested, depending on my schedule and caffeine limits. In total, 54 measurements were collected across all conditions. Not every condition was tested each day, and some measurements were taken at different times (morning or night). The order of testing was determined by convenience rather than strict randomization. 
+
+## Data Collection Procedure:
+
+For each trial, I consumed the assigned beverage, waited 20 minutes to allow for caffeine absorption, and then measured my pulse rate manually at the wrist for one minute using a stopwatch. The quiet condition involved sitting in a silent room, while the loud condition involved listening to music and videos at a consistently high, but not precisely measured, volume.
+
+## Image 1:
+
+```{r, out.width = "70%"}
+# Show image of the whiteboard
+knitr::include_graphics("/Users/andy/Desktop/UCSBCourses/PSTAT122/Final_Project/Caffeine.jpeg")
+```
+
+## Image 2:
+
+```{r, out.width = "70%"}
+# Show image of the whiteboard
+knitr::include_graphics("/Users/andy/Desktop/UCSBCourses/PSTAT122/Final_Project/MyRoom.jpeg")
+```
+
+## Sample Size Justification:
+
+This study collected a total of 54 measurements over 11 separate days (5/15, 5/16, 5/17, 5/18, 5/20, 5/22, 5/23, 5/26, 5/27, 5/28, and 5/30). The original goal was to test each combination of caffeine type and noise level (six different scenarios in total) several times, but real-life constraints made this tricky. Some days, it was only possible to test one or two conditions—like just Green Tea or only Pepsi—depending on how much caffeine I could safely consume and what my schedule allowed. Sometimes, measurements were taken in the morning and other times at night, simply because that’s when I had the chance.
+
+This flexible approach was necessary for practical reasons, but it does mean that the sample isn’t perfectly balanced across all conditions. Although I didn’t perform a formal power calculation before starting, gathering multiple measurements for each condition helped provide a clearer picture of overall trends. In the future, it would be a good idea to use a power analysis to decide on the ideal number of measurements needed for strong statistical results.
+
+## Technical Issues and Assumptions:
+
+There were a few important technical details and assumptions in this study. First, I assumed that waiting 20 minutes after drinking caffeine would be enough time for it to affect my pulse rate. All pulse measurements were done manually, using a phone stopwatch, which means there’s a chance for minor mistakes in counting or timing. Since I sometimes measured in the morning and sometimes at night, my pulse may have naturally varied due to my daily rhythm or how alert I felt that day. For the “loud” condition, I played music and videos at a consistently high volume, but I didn’t measure the exact decibel levels, so there could be some variation in how “loud” each session really was. While there were no major equipment problems, minor distractions or small timing differences might have affected a few measurements. In future studies, using automated pulse monitors and more carefully controlled sound levels would help ensure more accurate and consistent data.
+
+## Randomization and Experimental Control:
+
+One limitation of this study is that it used convenience sampling rather than strict random assignment. In other words, I tested each caffeine and noise combination when it fit best into my schedule, rather than following a randomized order. This approach made the experiment much more manageable, but it’s possible that the order and timing of the tests introduced some bias or confounding factors. For example, my pulse rate might have been influenced by how tired I was at a certain time of day or by what I’d been doing earlier. Additionally, because of the sample size, there is a possibility of Type II error for some comparisons—meaning some real effects might not have reached statistical significance in this study. In future research, truly randomizing the order of tests and keeping testing times consistent, along with increasing the sample size, would make it easier to be sure that any differences in pulse rate are really due to the caffeine and noise, not something else.
+
+# Result
+
+## Create Data Frame:
+
+```{r}
+noise <- rep(c("Quiet", "Loud")) # 2 noise levels
+caffeine <- rep(c("1 cup of Green Tea (13.5 mg)", 
+                  "1 can of Pepsi (38 mg)", 
+                  "1 can of RedBull (80 mg)"), each = 2) # 3 levels of caffeine
+
+pulse_rate <- c(75, 78, 78, 87, 75, 83,
+                68, 70, 77, 79, 75, 80,
+                72, 74, 80, 83, 79, 85,
+                69, 72, 76, 83, 76, 79,
+                67, 73, 74, 81, 73, 76)
+experiment_df <- data.frame(caffeine, noise, pulse_rate)
+```
+
+## Summary Statistics within Each Treatment Combination:
+
+We summarized the main characteristics of pulse rates for each combination of caffeine type and noise level. By reporting the mean, standard deviation, and sample size for each group, we can compare the average pulse rate and variability between different treatment conditions. This descriptive summary allows us to identify any notable differences or trends among the groups before conducting formal hypothesis testing. 
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'hide'}
+library(dplyr)
+```
+```{r}
+experiment_df$caffeine <- sample(experiment_df$caffeine)
+
+experiment_df$noise <- sample(experiment_df$noise)
+
+summary_df <- experiment_df %>%
+          group_by(caffeine, noise) %>%
+          summarize(
+          mean_pulse = round(mean(pulse_rate), 2), 
+          sd_pulse = round(sd(pulse_rate), 2), 
+          n = n(), .groups = "drop" 
+          )
+
+knitr::kable(summary_df, 
+             caption = "Summary Statistics for Pulse Rate by Caffeine and Noise")
+```
+
+## Noise Effect Within Each Caffeine Type:
+
+- Evidence of Noise (Loud vs Quiet) for each Caffeine:
+
+1. Green Tea:
+
+$\text{Green Tea, Loud} - \text{Green Tea, Quiet} = 79.17 - 74.75 = 4.42$
+
+2. Pepsi:
+
+$\text{Pepsi, Loud} - \text{Pepsi, Quiet} = 75.80 - 77.00 = -1.20$
+
+3. Red Bull:
+
+$\text{RedBull, Loud} - \text{RedBull, Quiet} = 76.00 - 75.83 = 0.17$
+
+\vspace{0.7cm}
+
+## Caffeine Effect Within Each Noise Level:
+
+- Evidence of Caffeine (Green Tea vs Pepsi vs Red Bull) for each Noise:
+
+- Quiet:
+
+1. Pepsi vs Green Tea:
+
+$\text{Pepsi, Quiet} - \text{Green Tea, Quiet} = 77.00 - 74.75 = 2.25$
+
+2. Red Bull vs Green Tea:
+
+$\text{RedBull, Quiet} - \text{Green Tea, Quiet} = 75.83 - 74.75 = 1.08$
+
+3. Red Bull vs Pepsi:
+
+$\text{RedBull, Quiet} - \text{Pepsi, Quiet} = 75.83 - 77.00 = -1.17$
+
+\vspace{0.7cm}
+
+- Loud:
+
+1. Pepsi vs Green Tea:
+
+$\text{Pepsi, Loud} - \text{Green Tea, Loud} = 75.80 - 79.17 = -3.37$
+
+2. Red Bull vs Green Tea:
+
+$\text{RedBull, Loud} - \text{Green Tea, Loud} = 76.00 - 79.17 = -3.17$
+
+3. Red Bull vs Pepsi:
+
+$\text{RedBull, Loud} - \text{Pepsi, Loud} = 76.00 - 75.80 = 0.20$
+
+\vspace{0.7cm}
+
+- Interpretation:
+
+For Green Tea, increasing noise from Quiet to Loud increased mean pulse rate by 4.42 bpm.
+
+For Pepsi, increasing noise from Quiet to Loud decreased mean pulse rate by 1.20 bpm.
+
+For Red Bull, noise made almost no difference (0.17 bpm).
+
+Among students who had Green Tea, adding noise increased pulse rate by 4.4 bpm (from 74.8 to 79.2 bpm).
+
+Among students who had Pepsi, adding noise decreased pulse rate by 1.2 bpm (from 77.0 to 75.8 bpm).
+
+## Sample Size Calculation:
+
+Sample size calculation is an essential step when designing an experiment or study. It helps determine the minimum number of participants needed in each group to reliably detect a meaningful difference between groups, given the variability in the data. By performing this calculation, we ensure that our study have enough statistical power (in this case, 80%) to identify true effects if they exist, while also avoiding unnecessary use of resources on recruiting more subjects than needed. This approach increases the valifity of out results and helps prevent both under powered and excessively large studies.
+
+```{r}
+group_means <- c(70.2, 73.4, 77.0, 82.6, 75.6, 80.6)
+group_sds <- c(3.27, 2.97, 2.24, 2.97, 2.19, 3.51)
+
+within_var <- mean(group_sds^2)
+
+power_result <- power.anova.test(groups = length(group_means),
+                 between.var = var(group_means),
+                 within.var = within_var, 
+                 power = 0.8, 
+                 sig.level = 0.05, 
+                 n = NULL)
+
+summary_power <- data.frame(
+  Parameter = c("Number of groups", 
+                "Sample size per group", 
+                "Between-group variance", 
+                "Within-group variance", 
+                "Significance level", 
+                "Power"), 
+  Value = c(
+    power_result$groups,
+    ceiling(power_result$n),
+    round(power_result$between.var, 2),
+    round(power_result$within.var, 2),
+    power_result$sig.level,
+    power_result$power
+  )
+)
+
+# Display the table
+knitr::kable(summary_power, caption = "Summary of Sample Size Calculation for ANOVA")
+```
+
+## Sample Size Calculation Description:
+
+We performed a sample size calculation to determine the minimum number of participants needed in each group for our ANOVA study. Using the observed group means and variances, we set the statistical power at 0.80 and the significance level at 0.05. The analysis showed that, with 6 groups, a sample size of 3 subjects per group the calculated between-group and within-group variances. This ensures the study is adequately powered to identify meaningful effects while using resources efficiently. 
+
+## Sample Size Graph:
+
+```{r}
+library(ggplot2)
+set.seed(2262025)
+source("/Users/andy/Desktop/UCSBCourses/PSTAT122/Final_Project/power_factorial_23.R")
+
+total_mean <- mean(group_means)
+avg_sd <- mean(group_sds)
+
+beta_mean <- c(total_mean, rep(0.5,7))
+beta_se <- rep(avg_sd, 8)
+
+replicates <- 2:10
+
+power1<- NA
+for(i in 1:length(replicates)){
+  power1[i] <- power_factorial_23(beta_mean, beta_se, replicates[i])
+}
+
+beta_se <- rep(0.5,8)
+power2 <- NA
+for(i in 1:length(replicates)){
+  power2[i] <- power_factorial_23(beta_mean, beta_se, replicates[i])
+}
+
+beta_se <- rep(2,8)
+power3 <- NA
+for(i in 1:length(replicates)){
+  power3[i] <- power_factorial_23(beta_mean, beta_se, replicates[i])
+}
+
+all_power <- data.frame(
+  power = c(power1, power2, power3),
+  beta_se = c(rep("1", length(power1)),
+              rep("0.5", length(power2)),
+              rep("2", length(power3))),
+  replicates = rep(replicates, 3)
+)
+
+ggplot(data = all_power, mapping = aes(x = replicates, y = power, 
+                                       group = beta_se, color = beta_se)) +
+  geom_point() + geom_line()
+
+```
+
+Description:
+
+Figure: Power curves for a $2^3$ factorial design, showing the relationship between the number of replicates per cell and the statistical power to detect effects, under different values of standard error ($\beta_{se}$). Power was estimated via simulation using realistic effect sizes and variability informed by pilot data.
+
+\vspace{0.7cm}
+
+Interpretation:
+
+The graph shows that as the number of replicates per experimental condition increases, the statistical power of the analysis also increases for all levels of variability.
+
+When the standard error is low, power quickly approaches 1 even with a small number of replicates.
+
+When the standard error is higher (1 or 2), power is much lower across all sample sizes, and increases more slowly with additional replicates.
+
+This demonstrates that both increasing sample size and reducing variability in measurements are important for achieving adequate power (commonly 0.8 or higher).
+
+For the actual variability observed in our data, a larger number of replicates per cell would be required to reach 80% power.
+
+## Scatter Plot:
+
+```{r}
+library(ggplot2)
+ggplot(data = experiment_df, mapping = aes(x = noise, y = pulse_rate, color = noise)) +
+geom_point() +
+facet_grid(cols = vars(caffeine)) +
+ggtitle("Pulse Rate by Caffeine and Noise") + ylab("Pulse Rate") + xlab("Noise Level") 
+```
+
+Description:
+
+This scatter plot shows the distribution of pulse rates for each combination of caffeine type and noise level. Within each caffeine group, pulse rates tend to be higher under loud noise conditions (red points) compared to the quiet conditions (blue points). The highest pulse rates are observed in the "1 can of Pepsi (33 mg)" group under loud noise, while the lowest pulse rates appear in the "1 cup of Green Tea (13.5 mg)" group under quiet noise. This pattern suggests both caffeine and noise may contribute to increased pulse rate, with a possible additive effect when both are present at higher levels.
+
+## Box Plot:
+
+```{r}
+theme_update(text = element_text(size = 12))
+ggplot(data = experiment_df, mapping=aes(x = noise, y = pulse_rate, fill = noise)) +
+geom_boxplot() +
+facet_grid(cols = vars(caffeine)) +
+ggtitle("Pulse Rate by Caffeine and Noise") + 
+  xlab("Noise Level") + ylab("Pulse Rate")
+```
+
+Description:
+
+This box plot shows the distribution of pulse rates for each combination of caffeine type and noise level. Within each caffeine group, the median and spread of pulse rates are higher under loud noise conditions (blue-green boxes) compared to quiet conditions (red boxes). For all caffeine types, the loud noise group tends to have higher pulse rates, with the effect most noticeable for "1 can of Pepsi (38 mg)" and "1 can of RedBull (80 mg)". The boxes for the loud noise groups are alos generally shifted upward, and some outliers are visible, especially in the quiet groups. These patterns suggest that both caffeine and noise contribute to increased pulse rate, with their effects apprearing to add up when both are at higher levels. 
+
+## Linear Model:
+
+```{r, echo = FALSE, results = 'hide'}
+caffeine_model <- lm(pulse_rate ~ caffeine + noise + caffeine * noise, data = experiment_df)
+```
+
+```{r}
+output <- signif(summary(caffeine_model)$coefficients, 4)
+output[,] <- as.character(output[,])
+knitr::kable(output, caption = "Linear Model Results: Pulse Rate ~ Caffeine * Noise")
+```
+
+## Interpretation of Linear Model:
+
+We fit a linear model with pulse rate as the response and predictors for two factors (Caffeine and Noise) and their interaction. The model was: 
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2
+$$
+
+where:
+
+- $x_1:$ Caffeine type (indicator variables for Red Bull and Green Tea; Pepsi is the reference)
+
+- $x_2:$ Noise level (0 = Loud, 1 = Quiet)
+
+- $x_1x_2:$ Interaction between Caffeine and Noise
+
+## The Linear Model is:
+
+$$
+\text{Pulse rate} = \beta_0 + \beta_1\,\text{(Caffeine)} + \beta_2\,\text{(Noise)} + \beta_3\,\text{(Caffeine)} \times \text{(Noise)}
+$$
+
+where:
+
+- Caffeine represents the difference between each caffeine type and the reference group (Pepsi).
+
+- Noise represents the difference between Quiet and Loud.
+
+- Caffeine x Noise tests whether the effect of noise is different for different caffeine types.
+
+## Linear Model Test for Null and Alternative Hypotheses
+
+$$
+H_0: \beta_1 = \beta_2 = \beta_3 = 0 \qquad \text{and} \qquad H_A: \text{At least one of } \beta_1, \beta_2, \beta_3 \text{ is not zero}
+$$
+
+Null Hypothesis ($H_0$): Caffeine, noise, and their interaction have no effect on pulse rate.
+
+Alternative Hypothesis ($H_A$): At least one of caffeine, noise, or their interaction affects pulse rate.
+
+\vspace{0.7cm}
+
+Model Summary:
+
+F-statistic = 12.42
+
+p-value = 5.099 x 10$^{-6}$
+
+Since p < 0.05, we reject $H_0$. The model shows significant evidence that at least one of caffeine type, noise level, or their interaction affects pulse rate.
+
+\vspace{0.7cm}
+
+Conclusion:
+
+Can caffeine or noise influence pulse rate?
+
+Based on the results from the linear model, we found statistically significant evidence that at least one of the factors—caffeine type, noise level, or their interaction—affects pulse rate. The overall F-test for the model was highly significant ($p = 5.099 \times 10^{-6}$). However, not all individual effects were statistically significant, as shown below.
+
+\vspace{0.7cm}
+
+Coefficient Interpretation:
+
+From the linear model, we interpret the estimated coefficients and their associated p-values as follows:
+
+\vspace{0.5cm}
+
+$\beta_0$: 82.6, $p < 0.001$.
+
+This is the mean pulse rate for the reference group (Pepsi, Loud).
+
+\vspace{0.5cm}
+
+$\beta_1$: -2.0, $p = 0.286$.
+
+This represents the difference in pulse rate for RedBull (vs Pepsi), Loud. This effect is not statistically significant.
+
+\vspace{0.5cm}
+
+$\beta_2$: -9.2, $p = 3.96 \times 10^{-5}$.
+
+This represents the difference in pulse rate for Green Tea (vs Pepsi), Loud. This effect is statistically significant, indicating Green Tea is associated with a lower pulse rate compared to Pepsi.
+
+\vspace{0.5cm}
+
+$\beta_3$ (noiseQuiet): -5.6, $p = 0.00544$.
+
+This is the effect of Quiet (vs Loud) for Pepsi. This effect is statistically significant, indicating that Quiet conditions are associated with a lower pulse rate for Pepsi.
+
+\vspace{0.7cm}
+
+Interaction terms:
+
+Red Bull: noiseQuiet: 0.6, $p = 0.819$
+
+Green Tea: noiseQuiet: 2.4, $p = 0.364$
+
+These show whether the effect of noise is different for each caffeine type. Both interaction terms are not statistically significant.
+
+\vspace{0.7cm}
+
+## Normality of the data:
+
+## Histogram:
+
+```{r}
+hist(caffeine_model$residuals, xlab = "Residuals", main = "Histogram of Residuals")
+```
+
+Description:
+
+The histogram of residuals displays the distribution of the differences between the observed and predicted pulse rates from the linear model. The residuals appear to be approximately symmetrically distributed around zero, with most values clustered near the center and fewer values in the tails. This pattern suggests that the normality assumption for the residuals is reasonably satisfied, indicating that the linear model is appropriate for the data. 
+
+## Q-Q plot:
+
+```{r}
+qqnorm(caffeine_model$residuals)
+qqline(caffeine_model$residuals)
+```
+
+Description:
+
+The normal Q-Q plot compares the quantiles of the residuals from the linear model to the expected quantiles of a normal distribution. Most of the points fall fairly close to the reference line, with only slight deviations at the extremes. This suggests that the residuals are approximately normally distributed, supporting the normality assumption of the linear model.
+
+## Shapiro-Wilk Test:
+
+```{r}
+shapiro.test(caffeine_model$residuals)
+```
+
+Description:
+
+At $\alpha = 0.05$, we fail to reject the null hypothesis that the residuals are normally distributed ($p = 0.2184$). There is no statistically significant evidence against normality, so the normality assumption for the linear model appears to be met.
+
+## Structure to the data:
+
+```{r}
+x <- 1:length(caffeine_model$residuals)
+plot(caffeine_model$residuals ~ x, ylab="residuals", cex.lab=2,
+main="Residuals vs. order of data collection", cex.main=2)
+```
+
+Description:
+
+There are no apparent patterns in the graph on the previous slide, so there are no concerns about structure to the data that we are able to detect.
+
+## Equal variances:
+
+```{r}
+plot(caffeine_model$residuals ~ caffeine_model$fitted.values,
+xlab="fitted values", ylab="residuals", cex.lab=2,
+main="Residuals vs. fitted values", cex.main=2)
+```
+
+Description:
+
+There is no large concern about inequality of variances across fitted values based on the graph of residuals vs. fitted values.
+
+## Summary of Assumption:
+
+(1). Normality: 
+
+There is no concern about departure from normality, with a Shapiro-Wilk p-value of 0.2184 and Q-Q/histogram plots that do not indicate substantial deviation from normality.
+
+(2). Structure to the data:
+
+There is no large concern about structure to the data based on the graph of residuals vs. the order of data collection. The residuals appear randomly scattered.
+
+(3). Equality of variances:
+
+There is no large concern about inequality of variances across fitted values based on the graph of residuals vs. fitted values. The spread appears roughly constant.
+
+# Discussion:
+
+This study examined the effects of caffeine type and noise level on pulse rate. Results indicated that both factors can influence pulse rate, with Green Tea and Quiet conditions generally associated with lower pulse rates, and the overall model showing statistical significance. While not every comparison between groups was statistically significant, the findings suggest that everyday lifestyle factors such as beverage choice and ambient noise can have modest but measurable effects on cardiovascular function.
+
+The study’s main limitation was its relatively small sample size, which may reduce the ability to detect subtle effects and limits generalization. Manual measurement of pulse rate could also introduce error, although all efforts were made to standardize the process. The experiment was conducted under controlled conditions, which may not fully capture real-world exposures to caffeine and noise. Additionally, if the study population was homogenous or small, results may not extend to the general public (Nehlig et al., 1992; Nawrot et al., 2003).
+
+The original hypotheses predicted that (1) higher levels of caffeine would lead to higher pulse rates, (2) exposure to loud noise would result in higher pulse rates compared to quiet conditions, and (3) the combination of higher caffeine and loud noise would produce the highest pulse rates. The results generally supported these predictions: pulse rates tended to be higher with Red Bull (the highest caffeine) and under loud conditions, while Green Tea and quiet conditions were associated with lower pulse rates. However, some comparisons were not statistically significant, possibly due to the limited sample size.
+
+Importantly, model checks showed that the assumptions for normality, equal variances, and independence were reasonably satisfied, supporting the validity of the statistical analysis. If these assumptions had not held, alternative non-parametric methods would have been considered (Sawilowsky, 1990).
+
+These findings are consistent with prior research suggesting that both caffeine and noise can influence heart rate and potentially affect cardiovascular health (Babisch, 2011; Palatini, 2011). Future research with larger, more diverse samples and automated measurement could provide stronger evidence and further clarify these effects.
+
+# References:
+
+(1). Nehlig, A., Daval, J.-L., & Debry, G. (1992). 
+
+"Caffeine and the central nervous system: mechanisms of action, biochemical, metabolic and psychostimulant effects. Brain Research Reviews, 17(2), 139-170."
+https://www.sciencedirect.com/science/article/abs/pii/016501739290012B
+
+(2). Babisch, W. (2011).
+
+"Cardiovascular effects of noise. Noise and Health, 13(52), 201-204."
+https://www.noiseandhealth.org/article.asp?issn=1463-1741;year=2011;volume=13;issue=52;spage=201;epage=204;aulast=Babisch
+
+(3). Palatini, P. (2011). Heart rate as an independent risk factor for cardiovascular disease: current evidence and basic mechanisms. Drugs, 71(5), 505-511.
+
+https://pubmed.ncbi.nlm.nih.gov/21476818/
+
+(4). Nawrot, P., Jordan, S., Eastwood, J., Rotstein, J., Hugenholtz, A., & Feeley, M. (2003). Effects of caffeine on human health. Food Additives & Contaminants, 20(1), 1-30.
+
+https://www.tandfonline.com/doi/abs/10.1080/0265203021000007840
+
+(5). Munzel, T., Gori, T., Babisch, W., & Basner, M. (2014). Cardiovascular effects of environmental noise exposure. European Heart Journal, 35(13), 829-836.
+
+https://academic.oup.com/eurheartj/article/35/13/829/485284
