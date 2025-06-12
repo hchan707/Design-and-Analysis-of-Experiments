@@ -13,6 +13,8 @@ This repository contains a series of statistical projects using experimental des
 **Key Skills:** ANOVA, interaction modeling, assumption checks, linear modeling  
 **Findings:** Green Tea + Quiet = lowest pulse rate; Red Bull + Loud = highest  
 📄 [Report](./2x3FactorialDesginReport.pdf)
+🖼️ [Dashboard Visualization (Image)](./2x3FactorialDesign/caffeine_noise_dashboard.pdf) *(optional, if exported)*  
+📦 [Interactive Tableau Workbook (.twbx)](./2x3FactorialDesign/CaffeineNoise_PulseRate_2x3.twbx)
 
 ---
 
