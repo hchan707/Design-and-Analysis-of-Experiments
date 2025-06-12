@@ -12,6 +12,7 @@ This repository contains a series of statistical projects using experimental des
 **Design:** Self-experiment with 54 trials  
 **Key Skills:** ANOVA, interaction modeling, assumption checks, linear modeling  
 **Findings:** Green Tea + Quiet = lowest pulse rate; Red Bull + Loud = highest  
+
 📄 [Report](https://github.com/hchan707/Design-and-Analysis-of-Experiments/blob/main/2x3FactorialDesign/2x3FactorialDesginReport.pdf) 
 
 🖼️ [Dashboard Visualization (Image)](https://github.com/hchan707/Design-and-Analysis-of-Experiments/blob/main/2x3FactorialDesign/2x3FactorialDesign.pdf)   
